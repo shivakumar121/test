@@ -3,18 +3,40 @@ title: "SISBID_Day2"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r}
-summary(cars)
+```{r Install google sheets}
+library (devtools)
+install_github ("jennybc/googlesheets")
+#install.packages("googlesheets")
+library(googlesheets)
 ```
 
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
+```{r read in the data}
+sheets_url = "https://docs.google.com/spreadsheets/d/18KQQd4LY5k8Ucux1MvWCsQGQJlvd0ECTnn-3ixdOKFM/pubhtml"
+gsurl1 = gs_url(sheets_url)
+dat = gs_read (gsurl1, range = cell_rows(1:5))
+dat = gs_read(gsurl1)
+dat
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Doing JSON stuff now
+
+Read In JSON
+
+## Doing rvest
+
+recount_url = "https://raw.githubusercontent.com/SISBID/Module1/gh-pages/labs/bioc-software.html"
+install.packages("rvest")
+library(rvest)
+htmlfile = read_html(recount_url)
+
+
+nds = html_nodes(htmlfile, xpath='//*[@id="biocViews_package_table"]')
+dat = html_table(nds)
+dat = as.data.frame(dat)
+head(dat)
+text = paste(dat[,3], collapse=" ")
+install.packages(c("wordcloud","tm"))
+library (wordcloud)
+library(tm)
+wordcloud(text,max.words=50)
