@@ -12,12 +12,38 @@ he data is located here (note you don\'t need to unzip it to read it into R):
 http://sisbid.github.io/Module1/data/real_property_tax.csv.gz
 
 1. Read the Property Tax data into R and call it the variable `tax`
+```{r read the csv file}
+
+library (readr)
+library (stringr)
+data = read_csv ("real_property_tax.csv.gz")
+```
 
 2. How many addresses pay property taxes? 
+```{r Check Number of Adresses}
+length (data$propertyAddress)
+paste0("A total of ", length (data$propertyAddress), " addresses pay property tax")
+```
 
 3. What is the total city and state tax paid?
+```{r Total tax paid}
+TotalCityTax = data$cityTax
+str_sub (TotalCityTax, start = 1, end = 1) = ""
+TotalCityTax = as.numeric(TotalCityTax)
+TotalCityTax = TotalCityTax [-which(is.na(TotalCityTax))]
+paste0 ("Total city tax paid is = ", sum(TotalCityTax))
+```
 
 4. How many observations/properties are in each residence code?
+
+```{r Residence code}
+LevelsOfResidence = levels(as.factor(data$resCode))
+for (i in 1:length(LevelsOfResidence))
+  {
+  print (paste0 ("Total for ", LevelsOfResidence[i], " is = ", length (which(data$resCode == LevelsOfResidence[i]))))
+  }
+```
+
 
 5. What is the 75th percentile of city and state tax paid by residence code?
 
@@ -29,7 +55,15 @@ http://sisbid.github.io/Module1/data/real_property_tax.csv.gz
 * Assume decimals within acreage measurements
 * 1 acre = 43560 square feet
 * Look at the data 
+```{r Convert lot size to square feet}
+LotSize = data$lotSize
+ACREIndex = grep(LotSize, pattern = "ACRES")
+LotSize[ACREIndex] = str_replace (LotSize[ACREIndex], pattern = "ACRES", replacement = "")
+LotSize[ACREIndex] = str_trim (LotSize[ACREIndex], side = "both")
+LotSize[ACREIndex] = as.numeric (LotSize[ACREIndex]) * 43560
+```
 
+ACREIndex = grep(data$lotSize, pattern = "ACRES")
 
 ### B. "Baltimore Salary 2015" Dataset 
 
