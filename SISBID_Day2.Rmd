@@ -40,3 +40,18 @@ install.packages(c("wordcloud","tm"))
 library (wordcloud)
 library(tm)
 wordcloud(text,max.words=50)
+
+
+## Doing APIs
+
+```{r API chunk}
+
+library(jsonlite)
+
+oct4_dat = fromJSON("http://rest.ensembl.org//lookup/id/ENSG00000141510?content-type=application/json;expand=1")
+
+
+```
+
+
+#install.packages("jsonlite")
