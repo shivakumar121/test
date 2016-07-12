@@ -24,7 +24,7 @@ dat
 Read In JSON
 
 ## Doing rvest
-
+```{r rvest}
 recount_url = "https://raw.githubusercontent.com/SISBID/Module1/gh-pages/labs/bioc-software.html"
 install.packages("rvest")
 library(rvest)
@@ -40,6 +40,9 @@ install.packages(c("wordcloud","tm"))
 library (wordcloud)
 library(tm)
 wordcloud(text,max.words=50)
+```
+
+
 
 
 ## Doing APIs
@@ -50,8 +53,8 @@ library(jsonlite)
 
 oct4_dat = fromJSON("http://rest.ensembl.org//lookup/id/ENSG00000141510?content-type=application/json;expand=1")
 
-
+#install.packages("jsonlite")
 ```
 
 
-#install.packages("jsonlite")
+
